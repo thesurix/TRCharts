@@ -1,12 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.google.com' }
+        jcenter()
+    }
+}
+
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.1"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 21
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
     }
@@ -33,7 +40,7 @@ android {
 
     //Note: Using ndk r10c - might break with future releases
     task buildNative(type: Exec, description: 'Compile JNI sources with NDK') {
-        def ndkDir = project.plugins.findPlugin('com.android.library').sdkHandler.getNdkFolder();
+        def ndkDir = project.android.ndkDirectory.absolutePath;
         commandLine "$ndkDir/ndk-build"
     }
 
@@ -43,7 +50,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:21.+'
-    compile 'com.android.support:support-v13:21.+'
+    compile 'com.android.support:support-v4:27.0.2'
+    compile 'com.android.support:support-v13:27.0.2'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
